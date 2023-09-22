@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./server.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/nasfernane/ztm-node-pong/issues"
   },
-  "homepage": "https://github.com/nasfernane/ztm-node-pong#readme"
+  "homepage": "https://github.com/nasfernane/ztm-node-pong#readme",
+  "dependencies": {
+    "socket.io": "^4.7.2"
+  }
 }
