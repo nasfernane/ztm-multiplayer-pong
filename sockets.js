@@ -1,7 +1,10 @@
 function listen(io) {
+  // namespaces allow to share multiple logics or apps on the same server
+  // ex one namespace for pong, another one for a tetris game or chat 
+  const pongNamespace = io.of('/pong');
   let readyPlayerCount = 0;
 
-  io.on('connection', (socket) => {
+  pongNamespace.on('connection', (socket) => {
     console.log('a user connected as', socket.id);
   
     socket.on('ready', () => {
@@ -10,7 +13,7 @@ function listen(io) {
       readyPlayerCount++;
   
       if ((readyPlayerCount % 2) === 0) {
-        io.emit('startGame', socket.id)
+        pongNamespace.emit('startGame', socket.id)
       }
     })
   
