@@ -5,15 +5,18 @@ function listen(io) {
   let readyPlayerCount = 0;
 
   pongNamespace.on('connection', (socket) => {
+    let room;
     console.log('a user connected as', socket.id);
   
     socket.on('ready', () => {
-      console.log('player ready:', socket.id);
+      room = 'room-' + Math.floor(readyPlayerCount / 2);
+      socket.join(room);
+      console.log('player ready:', socket.id, room);
   
       readyPlayerCount++;
   
       if ((readyPlayerCount % 2) === 0) {
-        pongNamespace.emit('startGame', socket.id)
+        pongNamespace.in(room).emit('startGame', socket.id)
       }
     })
   
@@ -26,7 +29,8 @@ function listen(io) {
     })
   
     socket.on('disconnect', (reason) => {
-      console.log(`client ${socket.id} disconnected: ${reason}`)
+      console.log(`client ${socket.id} disconnected: ${reason}`);
+      socket.leave(room);
     }) 
   })
 }
